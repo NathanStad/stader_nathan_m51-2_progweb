@@ -5,14 +5,15 @@ import { Game } from "./module/Game.js";
 // Récupérer des pays depuis une API et les mélanger
 
 const CountryAPI = async () => {
-    const highscore = document.querySelector("#highscore").lastElementChild;
-    highscore.innerHTML = `Highscore = ${localStorage.getItem("highscore")}`
-
+    
     fetch('https://restcountries.com/v3.1/all') // fait une requête GET en une promesse
 	.then((response) => response.json())
 	.then((data) => {
         const game = new Game(shuffle(data));
 
+        const highscore = document.querySelector("#highscore").lastElementChild;
+        highscore.innerHTML = `Highscore = ${localStorage.getItem("highscore")}`
+        
         const form = document.querySelector('form');
         const input = form.firstElementChild;
         const button = form.lastElementChild;
@@ -31,7 +32,7 @@ const CountryAPI = async () => {
             }
 
             form.reset()
-            
+
             let high = localStorage.getItem("highscore");
             if (high < game.actualScore()) {
                 localStorage.setItem("highscore", game.actualScore())
